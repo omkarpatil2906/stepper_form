@@ -6,26 +6,24 @@ import Button from '@mui/material/Button'
 
 function ThirdStep() {
     const { register, handleSubmit, formState: { errors }, } = useForm()
-    const {handleOnChange,setUserData,submitData , userData , setStep} = useContext(MyContextApi)
-    // console.log(watch("example"))
+    const { handleOnChange, setUserData, userData, submitData, setStep, currentStep } = useContext(MyContextApi)
 
     const onSubmit = (data) => {
-     
-        console.log(data);
+
         setUserData({ ...userData, ...data });
-        setStep(4)
-        
-      };
+        submitData();
+        setStep(currentStep + 1);
+    };
     return (
         <div>
             <div>
-                <TextField label="Pincode" name='pincode' value={userData?.pincode} onChange={handleOnChange} {...register("pincode", { required: "pincode is required" })}/>
+                <TextField label="Pincode" name='pincode' value={userData?.pincode} onChange={(e) => handleOnChange(e)} {...register("pincode", { required: "pincode is required" })} />
                 {errors.pincode && <span>This field is required</span>}
             </div>
             <div>
                 <Button variant='contained' color='primary' onClick={handleSubmit(onSubmit)}>Next</Button>
             </div>
-           
+
         </div>
     )
 }

@@ -4,34 +4,30 @@ import TextField from '@mui/material/TextField';
 import { MyContextApi } from '../App';
 import Button from '@mui/material/Button'
 
-
-
-
 function FirstStep() {
-    const { register,handleSubmit  ,formState: { errors }, } = useForm()
-    const {handleOnChange , setUserData, userData, setStep} = useContext(MyContextApi)
+    const { register, handleSubmit  ,formState: { errors }, } = useForm()
+    const {handleOnChange , setUserData, userData, setStep, currentStep} = useContext(MyContextApi)
 
      
     const onSubmit = (data) => {
-     
-        console.log(data);
         setUserData({ ...userData, ...data });
-        setStep(2)
-        
-      };
+        setStep(currentStep + 1); 
+    };
+
+
     return (
         <div>
             <div>
-                <TextField label="First Name" name='firstName' value={userData?.firstName} onChange={handleOnChange} {...register("firstName", { required: "First Name is required" })}/>
-                {/* {errors.firstName && <span>This field is required</span>} */}
+                <TextField label="First Name" name='firstName' value={userData?.firstName}  onChange={(e) => handleOnChange(e)} {...register("firstName", { required: "First Name is required" })}/>
+                {errors.firstName && <span>This field is required</span>}
             </div>
             <div>
-                <TextField label="Last Name" name='lastName' value={userData?.lastName} {...register("lastName", { required: "last Name is required" })}/>
-                {/* {errors.lastName && <span>This field is required</span>} */}
+                <TextField label="Last Name" name='lastName' value={userData?.lastName}  onChange={(e) => handleOnChange(e)} {...register("lastName", { required: "last Name is required" })}/>
+                {errors.lastName && <span>This field is required</span>}
             </div> 
             <div>
-                <TextField label="Email"  name='email' value={userData?.email} {...register("email", { required: "email is required" })}/>
-                {/* {errors.email && <span>This field is required</span>} */}
+                <TextField label="Email"  name='email' value={userData?.email}  onChange={(e) => handleOnChange(e)} {...register("email", { required: "email is required" })}/>
+                {errors.email && <span>This field is required</span>}
             </div>
             <div>
                 <Button variant='contained' color='primary' onClick={handleSubmit(onSubmit)}>Next</Button>
