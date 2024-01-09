@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { createContext, useState } from 'react'
+import StepperForm from './components/StepperForm'
+ 
+export const MyContextApi = createContext()
 function App() {
+
+  const initialData = {
+    firstName:'',
+    lastName:'',
+    email:'',
+    number:'',
+    city:'',
+    landmark:'',
+    pincode:'',
+
+  }
+
+  const [userData , setUserData]= useState(initialData)
+  const [currentStep, setStep]= useState(1);
+  const [tableData, setTableData] = useState([])
+
+
+  const handleOnChange = (e) => {
+    setUserData({...userData , [e.target.name]:e.target.value})
+  }
+
+  const submitData = () =>{
+    setTableData([...tableData, userData])
+    setUserData(initialData)
+    // setStep(4)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <MyContextApi.Provider value={{tableData , setTableData, handleOnChange, submitData, currentStep, setStep}}>
+          <StepperForm/>
+      </MyContextApi.Provider>
+      
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
+
