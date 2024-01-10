@@ -2,9 +2,10 @@ import React, { useContext } from 'react'
 import { MyContextApi } from '../App'
 
 function FinalData() {
-  const {tableData} = useContext(MyContextApi)
+  const {tableData , userData} = useContext(MyContextApi)
   return (
     <div>
+    
       <table>
         <tr>
           <th>First Name</th>
@@ -17,8 +18,8 @@ function FinalData() {
         </tr>
 
         {
-          tableData.map((data)=>(
-            <tr>
+          tableData.map((data ,i)=>(
+            <tr key={i}>
               <th>{data.firstName}</th>
               <th>{data.lastName}</th>
               <th>{data.email}</th>

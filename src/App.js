@@ -22,13 +22,13 @@ function App() {
 
   const handleOnChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
+    console.log(handleOnChange);
   };
 
   const submitData = () => {
-  
     setTableData([...tableData, userData]);
     setUserData(initialData);
-    setStep(4)
+ 
   };
 
   return (
