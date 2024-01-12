@@ -1,40 +1,34 @@
 import React, { useContext } from 'react'
-import { useForm } from "react-hook-form"
 import TextField from '@mui/material/TextField';
-import { MyContextApi } from '../App';
-import Button from '@mui/material/Button'
-
-
-
+import { MyContext } from './StepperForm';
+import { useForm } from "react-hook-form"
 
 function FirstStep() {
-    const { register, handleSubmit  , formState: { errors }, } = useForm()
-    const {handleOnChange , setUserData, userData, setStep , currentStep} = useContext(MyContextApi)
+    const { register,  handleSubmit,   formState: { errors }, } = useForm()
+    const {userData , handleOnChange , handleNext} = useContext(MyContext)
 
-     
     const onSubmit = (data) => {
         console.log(data);
-        setUserData({ ...userData, ...data });
-        setStep(currentStep + 1)
-      };
+        handleNext()
+    }
+
     return (
-        <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-                <TextField label="First Name" name='firstName' value={userData?.firstName}  onChange={handleOnChange} {...register("firstName", { required: "First Name is required" })}/>
+                <TextField label="First Name" name='firstName' defaultValue={userData.firstName} onChange={handleOnChange} {...register("firstName", { required: "First name is requirde" })} />
                 {errors.firstName && <span>This field is required</span>}
             </div>
             <div>
-                <TextField label="Last Name" name='lastName' value={userData?.lastName}  onChange={handleOnChange} {...register("lastName", { required: "last Name is required" })}/>
-                {errors.lastName && <span>This field is required</span>}
+                <TextField label="Middle Name" name='middleName' defaultValue={userData.middleName} onChange={handleOnChange} {...register("middleName", { required: "middle name is requirde" })} />
+                {errors.middleName && <span>This field is required</span>}
             </div> 
             <div>
-                <TextField label="Email"  name='email' value={userData?.email}  onChange={handleOnChange} {...register("email", { required: "email is required" })}/>
-                {errors.email && <span>This field is required</span>}
+                <TextField label="Last Name" name='lastName' defaultValue={userData.lastName} onChange={handleOnChange}  {...register("lastName", { required: "last name is required" })} />
+                {errors.lastName && <span>This field is required</span>} 
             </div>
-            <div>
-                <Button variant='contained' color='primary' onClick={handleSubmit(onSubmit)}>Next</Button>
-            </div>
-        </div>
+           
+
+        </form>
     )
 }
 

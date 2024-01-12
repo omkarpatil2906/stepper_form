@@ -1,37 +1,47 @@
 import React, { useContext } from 'react'
-import { useForm } from "react-hook-form"
 import TextField from '@mui/material/TextField';
-import { MyContextApi } from '../App';
-import Button from '@mui/material/Button'
+import { MyContext } from './StepperForm';
+import { useForm } from "react-hook-form"
 
 function SecondStep() {
-    const { register, handleSubmit, formState: { errors }, } = useForm()
-    const { handleOnChange, setUserData, userData, setStep ,currentStep} = useContext(MyContextApi)
+
+    const { register,  handleSubmit,   formState: { errors }, } = useForm()
+    const {userData , handleOnChange , handleNext} = useContext(MyContext)
 
     const onSubmit = (data) => {
         console.log(data);
-        setUserData({ ...userData, ...data });
-        setStep(currentStep + 1); // Move to the next stepz
-    };
-
+        handleNext()
+    }
+   
+    
     return (
-        <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-                <TextField label="number" name='number' value={userData?.number}  onChange={handleOnChange}{...register("number", { required: "number is required" })} />
-                {errors.number && <span>This field is required</span>}
+                <TextField label="age" name='age' defaultValue={userData.age}  onChange={handleOnChange} {...register("age", { required: "age name is requirde" })} />
+                {errors.age && <span>This field is required</span>}
             </div>
             <div>
-                <TextField label="city" name='city' value={userData?.city}  onChange={handleOnChange} {...register("city", { required: "city Name is required" })} />
+                <TextField label="mobile"  name='mobile' defaultValue={userData.mobile} onChange={handleOnChange} {...register("mobile", { required: "mobile name is requirde" })} />
+                {errors.mobile && <span>This field is required</span>}
+            </div>
+            <div>
+                <TextField label="email" name='email' defaultValue={userData.email} onChange={handleOnChange} {...register("email", { required: "email name is requirde" })} />
+                {errors.email && <span>This field is required</span>}
+            </div>
+            <div>
+                <TextField label="city" name='city' defaultValue={userData.city} onChange={handleOnChange} {...register("city", { required: "city name is requirde" })} />
                 {errors.city && <span>This field is required</span>}
             </div>
             <div>
-                <TextField label="landmark" name='landmark' value={userData?.landmark}  onChange={handleOnChange} {...register("landmark", { required: "landmark is required" })} />
-                {errors.landmark && <span>This field is required</span>}
+                <TextField label="state" name='state' defaultValue={userData.state} onChange={handleOnChange} {...register("state", { required: "state name is requirde" })} />
+                {errors.state && <span>This field is required</span>}
             </div>
             <div>
-                <Button variant='contained' color='primary' onClick={handleSubmit(onSubmit)}>Next</Button>
+                <TextField label="zipcode" name='zipcode' defaultValue={userData.zipcode} onChange={handleOnChange} {...register("zipcode", { required: "zipcode name is requirde" })} />
+                {errors.zipcode && <span>This field is required</span>}
             </div>
-        </div>
+        
+        </form>
     )
 }
 
