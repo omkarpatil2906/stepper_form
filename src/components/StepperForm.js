@@ -8,60 +8,32 @@ import Typography from '@mui/material/Typography';
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
 import FinalData from './FinalData';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form'; 
 
 const steps = ['Basic Info', 'Personal Info', 'Final Info'];
+
 
 export const MyContext = React.createContext();
 
 export default function StepperForm() {
+  
   const methods = useForm();
   const { register, handleSubmit, formState } = methods;
 
-  const user = {
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    age: '',
-    mobile: '',
-    email: '',
-    city: '',
-    state: '',
-    zipcode: '',
-  };
-
-  const [userData, setUserData] = React.useState(user);
   const [tableData, setTableData] = React.useState([]);
   const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
+ 
 
   const isStepOptional = (step) => {
     return step === 1;
   };
 
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
-
   const handleNext = () => {
 
-    const updatedUserData = { ...userData, ...methods.getValues() };
-    setUserData(updatedUserData);
-    setTableData([...tableData, updatedUserData]);
-  
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-  
+    const updatedUserData = { ...methods.getValues()};
+    setTableData([ updatedUserData]);    
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
-  };
-  
-
-  const handleOnChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    
   };
 
   const handleBack = () => {
@@ -72,20 +44,12 @@ export default function StepperForm() {
     setActiveStep(0);
   };
 
-  const contextValue = {
-    userData,
-    tableData,
-    handleOnChange,
-    handleNext,
-    register,
-    handleSubmit,
-    formState,
-  };
+  const contextValue = {  tableData,  handleNext,  register,  handleSubmit,  formState,};
 
   return (
     <MyContext.Provider value={contextValue}>
       <FormProvider {...methods}>
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%' }} className=" bg-blue-50 min-h-screen">
           <Stepper activeStep={activeStep}>
             {steps.map((label, index) => {
               const stepProps = {};
@@ -93,9 +57,7 @@ export default function StepperForm() {
               if (isStepOptional(index)) {
                 labelProps.optional = <Typography variant="caption">Optional</Typography>;
               }
-              if (isStepSkipped(index)) {
-                stepProps.completed = false;
-              }
+              
               return (
                 <Step key={label} {...stepProps}>
                   <StepLabel {...labelProps}>{label}</StepLabel>

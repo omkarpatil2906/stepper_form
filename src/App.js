@@ -4,10 +4,13 @@ import StepperForm from './components/StepperForm'
 
 function App() {
   return (
-    <div>
+    <div >
       <StepperForm/>
     </div>
   )
 }
 
 export default App
+
+
+
