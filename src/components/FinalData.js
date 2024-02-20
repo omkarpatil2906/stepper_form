@@ -17,7 +17,6 @@ function FinalData() {
             <th className='border1'>Email</th>
             <th className='border1'>City</th>
             <th className='border1'>State</th>
-            <th className='border1'>Zipcode</th>
           </tr>
         </thead>
         <tbody>
@@ -31,7 +30,6 @@ function FinalData() {
               <td className='border1'>{data.email}</td>
               <td className='border1'>{data.city}</td>
               <td className='border1'>{data.state}</td>
-              <td className='border1'>{data.zipcode}</td>
             </tr>
           ))}
         </tbody>
